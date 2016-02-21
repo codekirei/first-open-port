@@ -15,7 +15,12 @@
     "mocha": "^2.4.5"
   },
   "scripts": {
-    "test": "mocha"
+    "cr": "npm run cover -s && npm run report -s",
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha",
+    "md": "pm2 start pen",
+    "report": "istanbul report text",
+    "test": "mocha",
+    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly"
   },
   "repository": {
     "type": "git",
