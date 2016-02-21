@@ -25,28 +25,33 @@ describe 'first open port', ->
   # ----------------------------------------------------------
 
   server = undefined
+  port = undefined
 
   # ----------------------------------------------------------
   # hooks
   # ----------------------------------------------------------
 
-  beforeEach ->
+  before ->
     server = net.createServer()
+    port = yield firstOpenPort 1024
+    server.listen(port)
 
-  afterEach ->
+  after ->
     server.close()
 
   # ----------------------------------------------------------
   # cases
   # ----------------------------------------------------------
 
-  it 'find an open port', ->
-    port = yield firstOpenPort 1024
+  it 'return port number', ->
     assert.isNumber port
 
   # ----------------------------------------------------------
 
+  it 'iteratively find an open port', ->
+    assert.notEqual port, yield firstOpenPort 1024
+
+  # ----------------------------------------------------------
+
   it 'reject Promise if no open ports in range', ->
-    port = yield firstOpenPort 1024
-    server.listen(port)
     assert.isRejected firstOpenPort port, port

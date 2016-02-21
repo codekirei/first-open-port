@@ -12,12 +12,11 @@ function firstOpenPort(port, max) {
       const server = net.createServer()
       server.on('error', () => {
         if ((port += 1) <= max) test(port)
-        else rej(new Error(`no open ports from ${start} to ${max}`))
+        else rej(new Error(`no ports open from ${start} to ${max}`))
       })
+      server.on('listening', () => server.close())
       server.on('close', () => res(port))
-      server.listen(port, err => {
-        if (!err) server.close()
-      })
+      server.listen(port)
     })()
   })
 }
