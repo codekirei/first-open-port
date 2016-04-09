@@ -1,6 +1,6 @@
 {
   "name": "first-open-port",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "find the first open port on localhost within a range of specified ports",
   "main": "index.js",
   "dependencies": {
